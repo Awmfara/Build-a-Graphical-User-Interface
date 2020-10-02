@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     #region Variables
     [Header("Variables")]
     [SerializeField, Tooltip("Type in Name of Opening Game Scene")]
-    public string LoadScene = "GameScene";
+    private string LoadScene = "GameScene";
 
     #endregion
 
