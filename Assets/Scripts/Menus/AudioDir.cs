@@ -12,7 +12,7 @@ public class AudioDir : MonoBehaviour
     private AudioSource mouseClickSource = null;
     [SerializeField, Tooltip("Assign to Assets>Audio>MouseClick")]
     private AudioClip mouseClickClip = null;
-    [SerializeField,Tooltip("Volume of Mouse Click")]
+    [SerializeField, Tooltip("Volume of Mouse Click")]
     private float mouseClickVolume = 1f;
     #endregion
     #region Faders
@@ -20,13 +20,17 @@ public class AudioDir : MonoBehaviour
     [SerializeField, Tooltip("Assign to Mixer")]
     private AudioMixer mixer = null;
     [SerializeField, Tooltip("Assign to Music Slider in Options")]
-    private Slider musicVol=null;
+    private Slider musicVol = null;
     [SerializeField, Tooltip("Assign to Mixer Music")]
-    private string musicMixer=("musicMixer");
+    private string musicMixer = ("musicMixer");
     [SerializeField, Tooltip("Assign to SFX Slider in Options")]
-    private Slider sfxVol=null;
+    private Slider sfxVol = null;
     [SerializeField, Tooltip("Assign to Mixer SFX")]
-    private string sfxMixer=("sfxMixer");
+    private string sfxMixer = ("sfxMixer");
+    [SerializeField, Tooltip("Assign to Master Slider in Options")]
+    private Toggle masterVol = null;
+    [SerializeField, Tooltip("Assign to masterMixer ")]
+    private string masterMixer = ("masterMixer");
     #endregion
 
     private void Awake()
@@ -67,7 +71,7 @@ public class AudioDir : MonoBehaviour
     /// </summary>
     /// <param name="_mixer">Assign to Mixer Parameter</param>
     /// <param name="_vol">Assign</param>
-    void SetVolume(string _mixer,float _vol)
+    void SetVolume(string _mixer, float _vol)
     {
         mixer.SetFloat(_mixer, ConvertToDecibel(_vol / musicVol.maxValue));
         PlayerPrefs.SetFloat(_mixer, _vol);
@@ -83,5 +87,16 @@ public class AudioDir : MonoBehaviour
             mouseClickSource.PlayOneShot(mouseClickClip, mouseClickVolume);
         }
     }
-   
+    public void MuteAudio(bool isMuted)
+    {
+        if (isMuted)
+        {
+            mixer.SetFloat("masterMixer", -80);
+        }
+        else
+        {
+            mixer.SetFloat("masterMixer", 0);
+        }
+    }
+
 }

@@ -24,12 +24,10 @@ public class OptionsMenu : MonoBehaviour
  
         
     }
-    private void SavePlayerPrefs()
+  
+    void SavePlayerPrefs()
     {
-        if(fullScreenToggle.isOn)
-        {
-            PlayerPrefs.SetInt("full")
-        }
+
     }
     void LoadPlayerPrefs()
     {
@@ -41,5 +39,9 @@ public class OptionsMenu : MonoBehaviour
         {
             fullScreenToggle.isOn = true;
         }
+    }
+    public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
     }
 }
