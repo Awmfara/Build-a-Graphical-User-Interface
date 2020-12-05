@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
-    private string MainMenuScene = ("PrefabBuilder");
+    private string MainMenuScene = ("MainMenu");
     
     void Update()
     {
         if (Input.anyKey)
         {
-            Debug.Log("KeyisPressed");
             SceneManager.LoadScene(MainMenuScene);
         } 
     }

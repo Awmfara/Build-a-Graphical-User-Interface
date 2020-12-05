@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 692065841d153d84fb7282c43116d7a2
   - enabled: 1
-    path: Assets/Scenes/PrefabBuilder.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 13dc3e96d08a3de40b85fd61563262c3
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/GamePlay.unity
     guid: b85ef3b24345cc845becab5a227a6a5d

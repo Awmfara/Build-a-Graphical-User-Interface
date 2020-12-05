@@ -10,15 +10,20 @@ public class AudioDir : MonoBehaviour
     [Header("Mouse Click")]
     [SerializeField, Tooltip("Assign to Audio Sources>SFX>MouseClick")]
     private AudioSource mouseClickSource = null;
-    [SerializeField, Tooltip("Assign to Assets>Audio>MouseClick")]
-    private AudioClip mouseClickClip = null;
-    [SerializeField, Tooltip("Volume of Mouse Click")]
-    private float mouseClickVolume = 1f;
+
+
+    [SerializeField]
+    private bool isMuted;
+    [SerializeField]
+    private Toggle muteAudio;
     #endregion
     #region Faders
     [Header("Mixer")]
     [SerializeField, Tooltip("Assign to Mixer")]
     private AudioMixer mixer = null;
+
+
+
     [SerializeField, Tooltip("Assign to Music Slider in Options")]
     private Slider musicVol = null;
     [SerializeField, Tooltip("Assign to Mixer Music")]
@@ -27,24 +32,39 @@ public class AudioDir : MonoBehaviour
     private Slider sfxVol = null;
     [SerializeField, Tooltip("Assign to Mixer SFX")]
     private string sfxMixer = ("sfxMixer");
-    [SerializeField, Tooltip("Assign to Master Slider in Options")]
-    private Toggle masterVol = null;
-    [SerializeField, Tooltip("Assign to masterMixer ")]
+    [SerializeField, Tooltip("masterMixer")]
     private string masterMixer = ("masterMixer");
+
+
+
     #endregion
 
     private void Awake()
     {
         MixerSetupMeth();
-
+    }
+    private void Start()
+    {
+        MuteInitialisation();
     }
 
+    private void MuteInitialisation()
+    {
+        int muteCheck = PlayerPrefs.GetInt("mutePrefs");
+        if (muteCheck == 0)
+        {
+            mixer.SetFloat("masterMixer", -80);
+            muteAudio.isOn = true;
+            isMuted = true;
+        }
+        else
+        {
+            mixer.SetFloat("masterMixer", -10);
+            muteAudio.isOn = false;
+            isMuted = false;
+        }
+    }
 
-
-    /// <summary>
-    /// Plays Mouse Click Sound
-    /// 
-    /// </summary>
     void Update()
     {
         MouseClickMeth();
@@ -65,7 +85,11 @@ public class AudioDir : MonoBehaviour
         SetVolume(sfxMixer, savedSfxVol);
         sfxVol.value = savedSfxVol;
         sfxVol.onValueChanged.AddListener((float _) => SetVolume(sfxMixer, _));
+
+
+
     }
+
     /// <summary>
     /// Sets Volumme of Mixer using ConvertToDecibel function
     /// </summary>
@@ -84,7 +108,7 @@ public class AudioDir : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            mouseClickSource.PlayOneShot(mouseClickClip, mouseClickVolume);
+            mouseClickSource.Play();
         }
     }
     public void MuteAudio(bool isMuted)
@@ -92,10 +116,14 @@ public class AudioDir : MonoBehaviour
         if (isMuted)
         {
             mixer.SetFloat("masterMixer", -80);
+            PlayerPrefs.SetInt("mutePrefs", 0);
+
+
         }
-        else
+        if (isMuted == false)
         {
-            mixer.SetFloat("masterMixer", 0);
+            mixer.SetFloat("masterMixer", -10);
+            PlayerPrefs.SetInt("mutePrefs", 1);
         }
     }
 
